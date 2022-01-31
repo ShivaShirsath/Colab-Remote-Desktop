@@ -6,3 +6,4 @@
  - Now, Visit Remote Desktop at http://remotedesktop.google.com/ to access your instance
  - Optional: Mount GDrive
  - Optional: Use NGROK for SSH
+[.](https://colab.research.google.com/github/PradyumnaKrishna/Colab-Hacks/blob/master/Colab%20RDP/Colab%20RDP.ipynb)
