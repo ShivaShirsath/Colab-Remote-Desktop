@@ -12,14 +12,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: |
-          useradd -m shiva
-          adduser shiva sudo
-          echo 'shiva:shiva' | sudo chpasswd
-          sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd
-
-      - name: Run a multi-line script
+      - name: Run
         run: |
           apt update
           
