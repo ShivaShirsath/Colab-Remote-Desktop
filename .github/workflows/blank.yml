@@ -1,0 +1,38 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: |
+          useradd -m shiva
+          adduser shiva sudo
+          echo 'shiva:shiva' | sudo chpasswd
+          sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd
+
+      - name: Run a multi-line script
+        run: |
+          apt update
+          
+          export DEBIAN_FRONTEND=noninteractive
+          apt install --assume-yes xfce4 desktop-base xfce4-terminal firefox git fonts-indic fonts-emojione
+          rm -rf /usr/share/themes
+          rm -rf /usr/share/icons
+          PWDx=$PWD && cd ~ && git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git && cd WhiteSur-gtk-theme && chmod +x * && ./install.sh -c dark -a all -t orange -s 180 -HD --round --dialog && cd $PWDx
+          PWDx=$PWD && cd ~ && git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git && cd WhiteSur-icon-theme && chmod +x * && ./install.sh -t orange -b --black && cd $PWDx
+          PWDx=$PWD && cd ~ && git clone https://github.com/vinceliuice/WhiteSur-cursors.git && cd WhiteSur-cursors && chmod +x * && bash install.sh && cd $PWDx
+          PWDx=$PWD && mkdir /usr/share/backgrounds && cd /usr/share/backgrounds && wget https://raw.githubusercontent.com/ShivaShirsath/MacOS-theme-for-Ubuntu/main/WhiteSur.svg && cd $PWDx
+          bash -c 'echo \"exec /etc/X11/Xsession /usr/bin/xfce4-session\" > /etc/chrome-remote-desktop-session'
+          apt remove --assume-yes gnome-terminal
+          apt install --assume-yes xscreensaver
+          systemctl disable lightdm.service
+          
